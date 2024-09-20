@@ -8,7 +8,7 @@ import useWindowSize from "@hooks/useWindowSize";
 
 const Sidebar = () => {
   const currentMenu = useSidebar();
-  const iconClass = "w-5 h-5 text-white ";
+  const iconClass = "md:w-5 w-4 md:h-5 w-4 text-white";
   const navigate = useNavigate();
   const { md } = useWindowSize();
 
@@ -33,7 +33,7 @@ const Sidebar = () => {
   return (
     <div className="bg-secondary rounded-s-3xl md:w-56 w-24 flex flex-col items-center py-12 gap-1">
       {sidebarItems.map((item, index) => (
-        <div key={index} className="w-full h-12 px-4">
+        <div key={index} className="w-full md:h-12 h-9 md:px-4 px-5">
           <Tooltip
             hasArrow
             label={!md && item.title}
@@ -42,14 +42,14 @@ const Sidebar = () => {
           >
             <button
               className={clsx(
-                "w-full h-full flex items-center justify-left rounded-lg",
+                "w-full h-full flex items-center md:justify-start justify-center rounded-lg",
                 currentMenu.menu === index
                   ? "bg-blue-500/40"
                   : "hover:bg-blue-500/20",
               )}
               onClick={() => handleClick(index)}
             >
-              <span className="flex gap-2 items-center ps-4">
+              <span className="flex gap-2 items-center md:ps-4">
                 {item.icon}
                 {md && (
                   <span className="text-white text-sm font-semibold">

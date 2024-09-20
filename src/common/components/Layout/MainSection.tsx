@@ -6,7 +6,7 @@ interface Props {
 }
 const MainSection = (props: Props) => {
   return (
-    <div className="px-10">
+    <div className="md:px-10 px-2">
       <div className="flex shadow-app rounded-[3rem]">
         <Sidebar />
         {props.children}
