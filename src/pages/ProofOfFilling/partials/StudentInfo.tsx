@@ -6,7 +6,11 @@ import {
 } from "@components/Table";
 import { getStudent } from "../../../api/student/service";
 
-const StudentInfo = () => {
+type StudentInfoProps = {
+  currentSKS: number;
+};
+
+const StudentInfo = ({ currentSKS }: StudentInfoProps) => {
   const studentData = getStudent();
   const header = ["npm", "nama", "jurusan", "waktu kuliah", "total sks"];
 
@@ -25,7 +29,7 @@ const StudentInfo = () => {
               <div>{studentData.shift ? studentData.shift : "-"}</div>
 
               <div>
-                {studentData.current_sks ? studentData.current_sks : "-"} /{" "}
+                {currentSKS ? currentSKS : 0} /{" "}
                 {studentData.max_sks ? studentData.max_sks : "-"}
               </div>
             </TableRow>

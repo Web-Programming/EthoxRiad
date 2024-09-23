@@ -5,7 +5,6 @@ const dayName: { [key: number]: string } = {
   4: "Kamis",
   5: "Jumat",
   6: "Sabtu",
-  7: "Minggu",
 };
 
 const sessionName: { [key: number]: string } = {

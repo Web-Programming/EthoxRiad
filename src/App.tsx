@@ -3,6 +3,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ProofOfFillingContent from "@pages/ProofOfFilling/content";
 import ScheduleContent from "@pages/Schedule/content";
 import PrismaOnlineContent from "@pages/PrismaOnline/content";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ function Layout() {
         <Outlet />
       </main>
       <footer>{/* <Footer /> */}</footer>
+      <Toaster />
     </div>
   );
 }

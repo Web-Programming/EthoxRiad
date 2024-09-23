@@ -4,7 +4,7 @@ import SearchCourse from "./partials/SearchCourse";
 import { useLocation } from "react-router-dom";
 
 const PrismaOnlineContent = () => {
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState<string>("");
   const location = useLocation();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const PrismaOnlineContent = () => {
       </div>
 
       {/* CourseList */}
-      <div className="text-2xl font-bold py-4 px-5">Daftar Matakuliah</div>
+      <div className="text-2xl font-bold py-4 px-5">Daftar Mata Kuliah</div>
       <hr />
       <div className="bg-white rounded-lg py-1 px-5">
         <CourseList keyword={keyword} />

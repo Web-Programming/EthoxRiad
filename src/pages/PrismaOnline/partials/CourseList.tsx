@@ -4,16 +4,42 @@ import {
   TableEmptyRow,
   TableRow,
 } from "@components/Table";
-import { getCourseDataStatus, getCourses } from "../../../api/course/service";
+import {
+  getCourseDataStatus,
+  getCourses,
+  joinCourse,
+  leaveCourse,
+} from "../../../api/course/service";
 import { dayName, sessionName, statusDetail, statusName } from "@utils/consts";
 import { cn } from "@utils/cn";
+import { useEffect, useState } from "react";
+import { CourseModel } from "../../../api/course/model";
 
 type CourseListProps = {
   keyword: string;
 };
 
 const CourseList = ({ keyword }: CourseListProps) => {
-  const coursesData = getCourses(keyword);
+  const [courses, setCourses] = useState<CourseModel[]>(getCourses(keyword));
+
+  const handleJoinCourse = (courseId: number) => {
+    const isJoined = joinCourse(courseId);
+    if (isJoined) {
+      setCourses(getCourses(keyword));
+    }
+  };
+
+  const handleLeaveCourse = (courseId: number) => {
+    const isLeaved = leaveCourse(courseId);
+    if (isLeaved) {
+      setCourses(getCourses(keyword));
+    }
+  };
+
+  useEffect(() => {
+    setCourses(getCourses(keyword));
+  }, [keyword]);
+
   const header = [
     "no",
     "mata kuliah",
@@ -30,8 +56,13 @@ const CourseList = ({ keyword }: CourseListProps) => {
     <div className="flex flex-col gap-5">
       <BaseTable>
         <TableBody header={header}>
-          {coursesData.length !== 0 ? (
-            coursesData.map((row, index) => {
+          {!keyword || keyword === "" || keyword.length < 3 ? (
+            <TableEmptyRow
+              text="Silahkan masukkan kata kunci pencarian minimal 3 karakter"
+              colspan={header.length}
+            />
+          ) : courses.length !== 0 ? (
+            courses.map((row, index) => {
               return (
                 <TableRow key={row.id}>
                   <td className="px-4 border border-secondary">{index + 1}</td>
@@ -87,11 +118,17 @@ const CourseList = ({ keyword }: CourseListProps) => {
                         statusName.APPROVED ||
                       statusDetail[getCourseDataStatus(row.id)][0] ==
                         statusName.WAITING ? (
-                      <div className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-red-500 hover:bg-red-700">
+                      <div
+                        onClick={() => handleLeaveCourse(row.id)}
+                        className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-red-500 hover:bg-red-700"
+                      >
                         Keluar kelas
                       </div>
                     ) : (
-                      <div className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-green-500 hover:bg-green-700">
+                      <div
+                        className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-green-500 hover:bg-green-700"
+                        onClick={() => handleJoinCourse(row.id)}
+                      >
                         Masuk kelas
                       </div>
                     )}

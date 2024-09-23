@@ -4,15 +4,28 @@ import {
   TableEmptyRow,
   TableRow,
 } from "@components/Table";
-import { getSelectedCourses } from "../../../api/course/service";
+import {
+  getCurrentSKS,
+  getSelectedCourses,
+  leaveCourse,
+} from "../../../api/course/service";
 import { dayName, sessionName, statusDetail, statusName } from "@utils/consts";
 import { cn } from "@utils/cn";
+import { useState } from "react";
+import { SelectedCourseModel } from "../../../api/course/model";
 
-const SelectedCourseList = () => {
-  const selectedCoursesData = getSelectedCourses();
+type SelectedCourseListProps = {
+  setCurrentSKS: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const SelectedCourseList = ({ setCurrentSKS }: SelectedCourseListProps) => {
+  const [selectedCourses, setSelectedCourses] =
+    useState<SelectedCourseModel[]>(getSelectedCourses());
+
   const header = [
     "no",
     "kode mk",
+    "mata kuliah",
     "sks",
     "kelas",
     "jadwal",
@@ -21,17 +34,28 @@ const SelectedCourseList = () => {
     "aksi",
   ];
 
+  const handleLeaveCourse = (courseId: number) => {
+    const isLeaved = leaveCourse(courseId);
+    if (isLeaved) {
+      setSelectedCourses(getSelectedCourses());
+      setCurrentSKS(getCurrentSKS());
+    }
+  };
+
   return (
     <div className="flex flex-col gap-5">
       <BaseTable>
         <TableBody header={header}>
-          {selectedCoursesData.length !== 0 ? (
-            selectedCoursesData.map((row, index) => {
+          {selectedCourses.length !== 0 ? (
+            selectedCourses.map((row, index) => {
               return (
                 <TableRow key={row.course.id}>
                   <td className="px-4 border border-secondary">{index + 1}</td>
                   <td className="px-4 border border-secondary">
                     {row.course.code ? row.course.code : "-"}
+                  </td>
+                  <td className="px-4 border border-secondary">
+                    {row.course.name ? row.course.name : "-"}
                   </td>
                   <td className="px-4 border border-secondary">
                     {row.course.sks ? row.course.sks : "-"} sks
@@ -72,15 +96,14 @@ const SelectedCourseList = () => {
                   </td>
                   <td className="px-4 border border-secondary">
                     {statusDetail[row.status_id][0] == statusName.APPROVED ||
-                    statusDetail[row.status_id][0] == statusName.WAITING ? (
-                      <div className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-red-500 hover:bg-red-700">
-                        Keluar kelas
-                      </div>
-                    ) : (
-                      <div className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-green-500 hover:bg-green-700">
-                        Masuk kelas
-                      </div>
-                    )}
+                      (statusDetail[row.status_id][0] == statusName.WAITING && (
+                        <div
+                          onClick={() => handleLeaveCourse(row.course.id)}
+                          className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-red-500 hover:bg-red-700"
+                        >
+                          Keluar kelas
+                        </div>
+                      ))}
                   </td>
                 </TableRow>
               );
