@@ -12,21 +12,20 @@ function TableBody(props: Props) {
   return (
     <div className="my-5 overflow-x-auto">
       <div className="min-w-full inline-block align-middle">
-        <table className="w-full table-fixed min-w-[1000px]">
-          <thead className="text-left border-b border-border-secondary text-nowrap">
+        <table className="w-full">
+          <thead className="text-center text-nowrap">
             <tr>
               {header.map((header, index) => (
                 <th
                   key={index}
-                  className="uppercase text-2xs py-4 text-blue-300 px-4"
+                  className="uppercase text-2xs p-4 border border-secondary"
                 >
                   {header}
                 </th>
               ))}
-              <th className="w-[10rem]" />
             </tr>
           </thead>
-          <tbody className={clsx("text-left", className)}>{children}</tbody>
+          <tbody className={clsx("text-center", className)}>{children}</tbody>
         </table>
       </div>
     </div>

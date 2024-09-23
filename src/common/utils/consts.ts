@@ -18,4 +18,16 @@ const sessionName: { [key: number]: string } = {
   7: "19:00 - 20:40",
 };
 
-export { dayName, sessionName };
+const statusName = {
+  WAITING: "Menunggu",
+  APPROVED: "Disetujui",
+  REJECTED: "Ditolak",
+};
+
+const statusDetail: { [key: number]: string | string[] } = {
+  1: ["Menunggu", "bg-yellow-300"],
+  2: ["Disetujui", "bg-blue-300"],
+  3: ["Ditolak", "bg-red-300"],
+};
+
+export { dayName, sessionName, statusName, statusDetail };

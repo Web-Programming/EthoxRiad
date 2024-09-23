@@ -3,7 +3,16 @@ import TableBody from "./partials/TableBody";
 const ScheduleContent = () => {
   return (
     <div>
-      <TableBody />
+      <div
+        className="text-2xl font-bold
+      border-b py-4 px-5"
+      >
+        Daftar Matakuliah
+      </div>
+      <hr />
+      <div className="bg-white rounded-lg py-1 px-5">
+        <TableBody />
+      </div>
     </div>
   );
 };
