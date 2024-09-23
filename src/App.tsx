@@ -3,13 +3,14 @@ import "./index.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import MainSection from "@components/Layout/MainSection";
 import ContentWrapper from "@components/Layout/ContentWrapper";
+import DashboardPage from "@pages/Dashboard";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={DummyContent("Dashboard")} />
+          <Route path="/" element={<DashboardPage />} />
           <Route
             path="/jadwal-perkuliahan"
             element={DummyContent("Jadwal Perkuliahan")}
