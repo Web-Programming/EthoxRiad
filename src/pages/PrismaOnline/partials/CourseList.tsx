@@ -4,19 +4,24 @@ import {
   TableEmptyRow,
   TableRow,
 } from "@components/Table";
-import { getSelectedCourses } from "../../../api/course/service";
+import { getCourseDataStatus, getCourses } from "../../../api/course/service";
 import { dayName, sessionName, statusDetail, statusName } from "@utils/consts";
 import { cn } from "@utils/cn";
 
-const SelectedCourseList = () => {
-  const selectedCoursesData = getSelectedCourses();
+type CourseListProps = {
+  keyword: string;
+};
+
+const CourseList = ({ keyword }: CourseListProps) => {
+  const coursesData = getCourses(keyword);
   const header = [
     "no",
-    "kode mk",
-    "sks",
+    "mata kuliah",
     "kelas",
-    "jadwal",
-    "catatan dosen",
+    "jumlah sks",
+    "semester",
+    "kapasitas kelas",
+    "jadwal kuliah",
     "status",
     "aksi",
   ];
@@ -25,23 +30,29 @@ const SelectedCourseList = () => {
     <div className="flex flex-col gap-5">
       <BaseTable>
         <TableBody header={header}>
-          {selectedCoursesData.length !== 0 ? (
-            selectedCoursesData.map((row, index) => {
+          {coursesData.length !== 0 ? (
+            coursesData.map((row, index) => {
               return (
-                <TableRow key={row.course.id}>
+                <TableRow key={row.id}>
                   <td className="px-4 border border-secondary">{index + 1}</td>
                   <td className="px-4 border border-secondary">
-                    {row.course.code ? row.course.code : "-"}
+                    {row.code ? row.code : "-"} | {row.name ? row.name : "-"}
                   </td>
                   <td className="px-4 border border-secondary">
-                    {row.course.sks ? row.course.sks : "-"} sks
+                    {row.class ? row.class : "-"}
                   </td>
                   <td className="px-4 border border-secondary">
-                    {row.course.class ? row.course.class : "-"}
+                    {row.sks ? row.sks : "-"} sks
                   </td>
                   <td className="px-4 border border-secondary">
-                    {row.course.schedule
-                      ? row.course.schedule.map((schedule) => {
+                    {row.semester_id ? row.semester_id : "-"}
+                  </td>
+                  <td className="px-4 border border-secondary">
+                    {row.capacity ? row.capacity : "-"} / 40
+                  </td>
+                  <td className="px-4 border border-secondary">
+                    {row.schedule
+                      ? row.schedule.map((schedule) => {
                           return (
                             <div
                               key={schedule.id}
@@ -58,21 +69,24 @@ const SelectedCourseList = () => {
                       : "-"}
                   </td>
                   <td className="px-4 border border-secondary">
-                    {row.lecturer_note ? row.lecturer_note : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
                     <div
                       className={cn(
-                        statusDetail[row.status_id][1],
+                        statusDetail[getCourseDataStatus(row.id)][1],
                         "py-2 px-4 rounded-full text-white text-xs font-semibold",
                       )}
                     >
-                      {statusDetail[row.status_id][0]}
+                      {statusDetail[getCourseDataStatus(row.id)][0]}
                     </div>
                   </td>
                   <td className="px-4 border border-secondary">
-                    {statusDetail[row.status_id][0] == statusName.APPROVED ||
-                    statusDetail[row.status_id][0] == statusName.WAITING ? (
+                    {row.capacity >= 40 ? (
+                      <div className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-gray-500">
+                        Penuh
+                      </div>
+                    ) : statusDetail[getCourseDataStatus(row.id)][0] ==
+                        statusName.APPROVED ||
+                      statusDetail[getCourseDataStatus(row.id)][0] ==
+                        statusName.WAITING ? (
                       <div className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-red-500 hover:bg-red-700">
                         Keluar kelas
                       </div>
@@ -97,4 +111,4 @@ const SelectedCourseList = () => {
   );
 };
 
-export default SelectedCourseList;
+export default CourseList;

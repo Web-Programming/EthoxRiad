@@ -22,12 +22,14 @@ const statusName = {
   WAITING: "Menunggu",
   APPROVED: "Disetujui",
   REJECTED: "Ditolak",
+  NOT_TAKEN: "Tidak diambil",
 };
 
 const statusDetail: { [key: number]: string | string[] } = {
-  1: ["Menunggu", "bg-yellow-300"],
-  2: ["Disetujui", "bg-blue-300"],
-  3: ["Ditolak", "bg-red-300"],
+  1: [statusName.WAITING, "bg-yellow-300"],
+  2: [statusName.APPROVED, "bg-blue-300"],
+  3: [statusName.REJECTED, "bg-red-300"],
+  4: [statusName.NOT_TAKEN, "bg-gray-300"],
 };
 
 export { dayName, sessionName, statusName, statusDetail };

@@ -16,3 +16,9 @@ export type SelectedCourseModel = {
   lecturer_note?: string;
   status_id: number;
 };
+
+export type SelectedCourseLocalStorageModel = {
+  course_id: number;
+  lecturer_note?: string;
+  status_id: number;
+};

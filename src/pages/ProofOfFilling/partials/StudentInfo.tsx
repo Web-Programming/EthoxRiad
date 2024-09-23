@@ -5,6 +5,7 @@ import {
   TableRow,
 } from "@components/Table";
 import { getStudent } from "../../../api/student/service";
+
 const StudentInfo = () => {
   const studentData = getStudent();
   const header = ["npm", "nama", "jurusan", "waktu kuliah", "total sks"];
