@@ -9,7 +9,7 @@ const NewsCard = (props: Props) => {
   const { news } = props;
 
   return (
-    <div className="bg-white border border-gray-200/60 rounded-md w-full w-[24rem]">
+    <div className="bg-white border border-gray-200/60 rounded-md w-[24rem]">
       <div className="py-3 border-b border-gray-200/60">
         <span className="font-semibold text-sm ps-3">{news.title}</span>
       </div>
