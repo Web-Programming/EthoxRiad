@@ -1,7 +1,4 @@
 import clsx from "clsx";
-import { TiArrowForward } from "react-icons/ti";
-import { FcApproval, FcDisclaimer } from "react-icons/fc";
-import { HiPencil, HiTrash } from "react-icons/hi";
 
 interface Props {
   className?: string;

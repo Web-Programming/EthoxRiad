@@ -1,5 +1,4 @@
 import moment from "moment";
-import { BalanceHistoryType } from "@services/balanceHistory";
 
 export const amountFormatter = (amount: number) => {
   const sign = amount > 0 ? "+" : amount < 0 ? "-" : "";
@@ -20,16 +19,3 @@ export function dateFormatter(date: string) {
     return moment(date).format("MMM DD, YYYY [at] hh:mm:ss A");
   }
 }
-
-export const balanceHistoryFormatter = (balanceHistory: BalanceHistoryType) => {
-  const formattedDate = dateFormatter(balanceHistory.created_at);
-  return {
-    ...balanceHistory,
-    prev_balance: balanceHistory.prev_balance ?? 0,
-    user: {
-      name: balanceHistory.user.name ?? "Anonymous",
-      npm: balanceHistory.user.npm ?? "000000000",
-    },
-    created_at: formattedDate,
-  };
-};

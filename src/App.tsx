@@ -1,6 +1,7 @@
-import ScheduleContent from "@pages/Schedule/content";
 import "./index.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import ProofOfFillingContent from "@pages/ProofOfFilling/content";
+import ScheduleContent from "@pages/Schedule/content";
 
 export default function App() {
   return (
@@ -8,6 +9,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<div>Hewwo</div>} />
+          <Route path="/proof-of-filling" element={<ProofOfFillingContent />} />
           <Route path="/schedule" element={<ScheduleContent />} />
         </Route>
       </Routes>

@@ -1,15 +1,10 @@
 import { coursesData, selectedCourseData } from "./data";
 
-const getCourses = () => {
-  return coursesData;
-};
+const getCourses = () => coursesData;
 
-const getSelectedCourses = () => {
-  return selectedCourseData;
-};
+const getSelectedCourses = () => selectedCourseData;
 
-const getCourseById = (id: number) => {
-  return coursesData.find((course) => course.id === id);
-};
+const getCourseById = (id: number) =>
+  coursesData.find((course) => course.id === id);
 
 export { getCourses, getSelectedCourses, getCourseById };
