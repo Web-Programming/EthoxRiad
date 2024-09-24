@@ -31,22 +31,22 @@ const RegularSchedule = () => {
                 );
                 return (
                   <TableRow key={`${dayIndex}-${courseIndex}`}>
-                    <td className="px-4 py-2 border border-secondary">
+                    <td className="px-4 py-2 border border-gray-200">
                       {rowIndex++}
                     </td>
-                    <td className="px-4 py-2 border border-secondary">
+                    <td className="px-4 py-2 border border-gray-200">
                       {daySchedule.dayName}
                     </td>
-                    <td className="px-4 py-2 border border-secondary">
+                    <td className="px-4 py-2 border border-gray-200">
                       {sessionName[course.sessionId]}
                     </td>
-                    <td className="px-4 py-2 border border-secondary">
+                    <td className="px-4 py-2 border border-gray-200">
                       {course.course.name}
                     </td>
-                    <td className="px-4 py-2 border border-secondary">
+                    <td className="px-4 py-2 border border-gray-200">
                       {course.course.sks}
                     </td>
-                    <td className="px-4 py-2 border border-secondary">
+                    <td className="px-4 py-2 border border-gray-200">
                       {exactSchedule && exactSchedule.room ? (
                         <div>
                           <div>{exactSchedule.room}</div>
@@ -56,7 +56,7 @@ const RegularSchedule = () => {
                         "-"
                       )}
                     </td>
-                    <td className="px-4 py-2 border border-secondary">
+                    <td className="px-4 py-2 border border-gray-200">
                       {course.course.class ? course.course.class : "-"}
                     </td>
                   </TableRow>

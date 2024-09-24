@@ -27,15 +27,15 @@ function TableBody(props: Props) {
             <tbody className="text-left">
               {header.map((header, index) => (
                 <tr key={index}>
-                  <th className="w-1/4 uppercase text-xs p-2 border border-secondary">
+                  <th className="w-1/4 uppercase text-xs p-2 border border-gray-200">
                     {header}
                   </th>
                   {isUsingColon && (
-                    <td className="w-1/12 text-center p-2 border border-secondary">
+                    <td className="w-1/12 text-center p-2 border border-gray-200">
                       :
                     </td>
                   )}
-                  <td className="w-3/4 p-2 border border-secondary">
+                  <td className="w-3/4 p-2 border border-gray-200">
                     {childrenArray.map((child, childIndex) => {
                       if (React.isValidElement(child)) {
                         return (
@@ -57,7 +57,7 @@ function TableBody(props: Props) {
                   {header.map((header, index) => (
                     <th
                       key={index}
-                      className="uppercase p-4 border border-secondary"
+                      className="uppercase p-4 border border-gray-200"
                     >
                       {header}
                     </th>

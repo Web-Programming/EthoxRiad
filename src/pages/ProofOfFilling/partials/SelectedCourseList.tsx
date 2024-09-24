@@ -34,11 +34,11 @@ const SelectedCourseList = () => {
                 );
                 return (
                   <TableRow key={dayIndex}>
-                    <td className="px-4 border border-secondary">{dayIndex}</td>
-                    <td className="px-4 border border-secondary">
+                    <td className="px-4 border border-gray-200">{dayIndex}</td>
+                    <td className="px-4 border border-gray-200">
                       {dayName[dayIndex]}
                     </td>
-                    <td className="px-4 border border-secondary">
+                    <td className="px-4 border border-gray-200">
                       {coursesForDay.length > 0 ? (
                         coursesForDay.map((course) => (
                           <BaseTable>

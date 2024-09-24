@@ -11,9 +11,7 @@ const ProofOfFillingContent = () => {
   const [isListMode, setIsListMode] = useState<boolean>(false);
 
   return (
-    <div className="py-6 px-4">
-      <div className="text-2xl font-bold mb-4">Bukti Pengisian KRS</div>
-
+    <div className="w-full">
       {/* StudentInfo */}
       <div className="bg-white rounded-lg py-1 px-5">
         <StudentInfo currentSKS={currentSKS} />
@@ -29,7 +27,7 @@ const ProofOfFillingContent = () => {
           {isListMode ? <TbListCheck size={24} /> : <TbListDetails size={24} />}
         </div>
       </div>
-      <hr />
+      <hr className="bg-gray-200" />
       <div className="bg-white rounded-b-lg py-3 px-5">
         {isListMode ? (
           <SelectedCourseList />

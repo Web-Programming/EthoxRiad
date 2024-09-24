@@ -29,7 +29,7 @@ const SwitchSheduleType = ({ type, setType }: SwitchSheduleTypeProps) => {
           key={item}
           className={cn(
             "sm:w-1/3 rounded-2xl font-bold py-2 px-4 text-center",
-            type === item
+            type === item || (item === "regular" && type === "")
               ? "bg-blue-900 text-white"
               : "bg-white hover:bg-gray-200 cursor-pointer transition-all duration-200",
           )}

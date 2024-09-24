@@ -16,18 +16,14 @@ const PrismaOnlineContent = () => {
   }, [location.search]);
 
   return (
-    <div className="py-6 px-4">
-      <div className="text-2xl font-bold mb-4">Prisma Online</div>
-
+    <div className="w-full">
       {/* SearchCourse */}
       <div className="bg-white rounded-lg py-1 px-5">
         <SearchCourse keyword={keyword} setKeyword={setKeyword} />
       </div>
 
       {/* CourseList */}
-      <div className="text-2xl font-bold py-4 px-5">Daftar Mata Kuliah</div>
-      <hr />
-      <div className="bg-white rounded-lg py-1 px-5">
+      <div className="bg-white rounded-lg mt-4 py-1 px-5">
         <CourseList keyword={keyword} />
       </div>
     </div>

@@ -50,20 +50,20 @@ const SelectedCourseTable = ({ setCurrentSKS }: SelectedCourseTableProps) => {
             selectedCourses.map((row, index) => {
               return (
                 <TableRow key={row.course.id}>
-                  <td className="px-4 border border-secondary">{index + 1}</td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">{index + 1}</td>
+                  <td className="px-4 border border-gray-200">
                     {row.course.code ? row.course.code : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.course.name ? row.course.name : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.course.sks ? row.course.sks : "-"} sks
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.course.class ? row.course.class : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.course.schedule
                       ? row.course.schedule.map((schedule) => {
                           return (
@@ -81,10 +81,10 @@ const SelectedCourseTable = ({ setCurrentSKS }: SelectedCourseTableProps) => {
                         })
                       : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.lecturer_note ? row.lecturer_note : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     <div
                       className={cn(
                         statusDetail[row.status_id][1],
@@ -94,7 +94,7 @@ const SelectedCourseTable = ({ setCurrentSKS }: SelectedCourseTableProps) => {
                       {statusDetail[row.status_id][0]}
                     </div>
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {statusDetail[row.status_id][0] == statusName.APPROVED ||
                       (statusDetail[row.status_id][0] == statusName.WAITING && (
                         <div

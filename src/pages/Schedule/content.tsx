@@ -19,14 +19,16 @@ const ScheduleContent = () => {
   }, [location.search]);
 
   return (
-    <div className="py-6 px-4">
-      <div className="text-2xl font-bold mb-4">Daftar Matakuliah</div>
-      <hr />
-      <div className="bg-white rounded-lg py-1 px-5">
+    <div className="w-full">
+      <div className="bg-white p-4 rounded-2xl w-full">
         <SwitchSheduleType type={type} setType={setType} />
-        {type === "regular" && <RegularSchedule />}
-        {type === "harian" && <DailySchedule />}
-        {type === "mingguan" && <WeeklySchedule />}
+        {type === "harian" ? (
+          <DailySchedule />
+        ) : type === "mingguan" ? (
+          <WeeklySchedule />
+        ) : (
+          <RegularSchedule />
+        )}
       </div>
     </div>
   );

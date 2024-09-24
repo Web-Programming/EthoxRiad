@@ -65,23 +65,23 @@ const CourseList = ({ keyword }: CourseListProps) => {
             courses.map((row, index) => {
               return (
                 <TableRow key={row.id}>
-                  <td className="px-4 border border-secondary">{index + 1}</td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">{index + 1}</td>
+                  <td className="px-4 border border-gray-200">
                     {row.code ? row.code : "-"} | {row.name ? row.name : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.class ? row.class : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.sks ? row.sks : "-"} sks
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.semester_id ? row.semester_id : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.capacity ? row.capacity : "-"} / 40
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.schedule
                       ? row.schedule.map((schedule) => {
                           return (
@@ -99,7 +99,7 @@ const CourseList = ({ keyword }: CourseListProps) => {
                         })
                       : "-"}
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     <div
                       className={cn(
                         statusDetail[getCourseDataStatus(row.id)][1],
@@ -109,7 +109,7 @@ const CourseList = ({ keyword }: CourseListProps) => {
                       {statusDetail[getCourseDataStatus(row.id)][0]}
                     </div>
                   </td>
-                  <td className="px-4 border border-secondary">
+                  <td className="px-4 border border-gray-200">
                     {row.capacity >= 40 ? (
                       <div className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-gray-500">
                         Penuh

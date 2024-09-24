@@ -19,7 +19,7 @@ const DailySchedule = () => {
   const dailySchedule = getDailySchedule();
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 bg-white">
       <BaseTable>
         <TableBody header={header}>
           {dailySchedule.sessions.length !== 0 ? (
@@ -34,14 +34,14 @@ const DailySchedule = () => {
                   key={sessionId}
                   className={cn({ "bg-blue-400 text-white": isActive })}
                 >
-                  <td className="p-2 border border-secondary">
+                  <td className="p-2 border border-gray-200">
                     {
                       sessionName[
                         sessionId as unknown as keyof typeof sessionName
                       ]
                     }
                   </td>
-                  <td className="p-2 border border-secondary">
+                  <td className="p-2 border border-gray-200">
                     {coursesForSession.length > 0 ? (
                       coursesForSession.map((course, courseIndex) => {
                         const exactSchedule = getScheduleByDayAndSession(

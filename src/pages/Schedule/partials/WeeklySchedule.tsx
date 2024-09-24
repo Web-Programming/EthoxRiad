@@ -30,7 +30,7 @@ const WeeklySchedule = () => {
           {weeklySchedule.length !== 0 ? (
             Object.keys(sessionName).map((sessionId) => (
               <TableRow key={sessionId}>
-                <td className="p-2 border border-secondary">
+                <td className="p-2 border border-gray-200">
                   {
                     sessionName[
                       sessionId as unknown as keyof typeof sessionName
@@ -54,7 +54,7 @@ const WeeklySchedule = () => {
                     );
 
                   return (
-                    <td key={dayId} className="p-2 border border-secondary">
+                    <td key={dayId} className="p-2 border border-gray-200">
                       {coursesForDayAndSession.length > 0 &&
                         coursesForDayAndSession.map((course, courseIndex) => {
                           const exactSchedule = getScheduleByDayAndSession(
