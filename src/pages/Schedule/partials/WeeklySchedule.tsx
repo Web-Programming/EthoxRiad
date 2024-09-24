@@ -1,83 +1,89 @@
 import {
   BaseTable,
   TableBody,
-  TableEmptyRow,
   TableRow,
+  TableEmptyRow,
 } from "@components/Table";
-import { getSelectedCourses } from "../../../api/course/service";
-import { dayName, sessionName, statusDetail, statusName } from "@utils/consts";
-import { cn } from "@utils/cn";
+import {
+  getWeeklySchedule,
+  getScheduleByDayAndSession,
+} from "../../../api/course/service";
+import { sessionName } from "@utils/consts";
+
+const header = [
+  "hari/jam",
+  "senin",
+  "selasa",
+  "rabu",
+  "kamis",
+  "jumat",
+  "sabtu",
+];
+
 const WeeklySchedule = () => {
-  const selectedCoursesData = getSelectedCourses();
-  const header = [
-    "no",
-    "kode mk",
-    "sks",
-    "kelas",
-    "jadwal",
-    "catatan dosen",
-    "status",
-    "aksi",
-  ];
+  const weeklySchedule = getWeeklySchedule();
 
   return (
     <div className="flex flex-col gap-5">
       <BaseTable>
         <TableBody header={header}>
-          {selectedCoursesData.length !== 0 ? (
-            selectedCoursesData.map((row) => {
-              return (
-                <TableRow key={row.course.id}>
-                  <td className="px-4 border border-secondary">
-                    {row.course.id}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.code ? row.course.code : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.sks ? row.course.sks : "-"} sks
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.class ? row.course.class : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.schedule
-                      ? row.course.schedule.map((schedule) => {
+          {weeklySchedule.length !== 0 ? (
+            Object.keys(sessionName).map((sessionId) => (
+              <TableRow key={sessionId}>
+                <td className="p-2 border border-secondary">
+                  {
+                    sessionName[
+                      sessionId as unknown as keyof typeof sessionName
+                    ]
+                  }
+                </td>
+                {header.slice(1).map((_, dayIndex) => {
+                  const dayId = dayIndex + 1;
+                  const coursesForDayAndSession = weeklySchedule
+                    .filter(
+                      (schedule) =>
+                        schedule.dayIndex === dayId &&
+                        schedule.courses.some(
+                          (course) => course.sessionId === parseInt(sessionId),
+                        ),
+                    )
+                    .flatMap((schedule) =>
+                      schedule.courses.filter(
+                        (course) => course.sessionId === parseInt(sessionId),
+                      ),
+                    );
+
+                  return (
+                    <td key={dayId} className="p-2 border border-secondary">
+                      {coursesForDayAndSession.length > 0 &&
+                        coursesForDayAndSession.map((course, courseIndex) => {
+                          const exactSchedule = getScheduleByDayAndSession(
+                            course.course.schedule,
+                            dayId,
+                            parseInt(sessionId),
+                          );
+
                           return (
                             <div
-                              key={schedule.id}
-                              className="flex flex-col border-dashed border border-gray-300 pb-2 text-center my-2 rounded-lg"
+                              key={courseIndex}
+                              className="rounded-lg p-4 bg-blue-400 text-white"
                             >
-                              <div>{dayName[schedule.day_id]}</div>
-                              <div>{sessionName[schedule.session_id]}</div>
+                              <div className="font-bold">
+                                {course.course.name}
+                              </div>
+                              <div>
+                                {exactSchedule && exactSchedule.room
+                                  ? exactSchedule.room
+                                  : "-"}
+                              </div>
                             </div>
                           );
-                        })
-                      : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.lecturer_note ? row.lecturer_note : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    <div
-                      className={cn(
-                        statusDetail[row.status_id][1],
-                        "py-2 px-4 rounded-full text-white text-xs font-semibold",
-                      )}
-                    >
-                      {statusDetail[row.status_id][0]}
-                    </div>
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {statusDetail[row.status_id][0] !== statusName.APPROVED && (
-                      <div className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-red-500 hover:bg-red-700">
-                        Keluar kelas
-                      </div>
-                    )}
-                  </td>
-                </TableRow>
-              );
-            })
+                        })}
+                    </td>
+                  );
+                })}
+              </TableRow>
+            ))
           ) : (
             <TableEmptyRow
               text="Data tidak ditemukan"

@@ -9,6 +9,7 @@ import {
   getScheduleByDayAndSession,
 } from "../../../api/course/service";
 import { sessionName } from "@utils/consts";
+import { getBuildingName } from "../utils/activeSchedule";
 
 const header = ["no", "hari", "jam", "mata kuliah", "sks", "ruang", "kelas"];
 
@@ -46,9 +47,14 @@ const RegularSchedule = () => {
                       {course.course.sks}
                     </td>
                     <td className="px-4 py-2 border border-secondary">
-                      {exactSchedule && exactSchedule.room
-                        ? exactSchedule.room
-                        : "-"}
+                      {exactSchedule && exactSchedule.room ? (
+                        <div>
+                          <div>{exactSchedule.room}</div>
+                          <div>{getBuildingName(exactSchedule.room)}</div>
+                        </div>
+                      ) : (
+                        "-"
+                      )}
                     </td>
                     <td className="px-4 py-2 border border-secondary">
                       {course.course.class ? course.course.class : "-"}

@@ -281,6 +281,41 @@ const getDailySchedule = () => {
   return groupedSchedules;
 };
 
+const getWeeklySchedule = () => {
+  const selectedCourses = getSelectedCourses();
+
+  const flattenedSchedules = selectedCourses.flatMap((item) =>
+    item.course.schedule.map((schedule) => ({
+      ...item,
+      dayId: schedule.day_id,
+      sessionId: schedule.session_id,
+    })),
+  );
+
+  const sortedSchedules = flattenedSchedules.sort((a, b) => {
+    if (a.dayId === b.dayId) {
+      return a.sessionId - b.sessionId;
+    }
+    return a.dayId - b.dayId;
+  });
+
+  const groupedSchedules = Array.from(
+    { length: 6 },
+    (_, index) => index + 1,
+  ).map((dayIndex) => {
+    const coursesForDay = sortedSchedules.filter(
+      (schedule) => schedule.dayId === dayIndex,
+    );
+    return {
+      dayIndex,
+      dayName: dayName[dayIndex],
+      courses: coursesForDay,
+    };
+  });
+
+  return groupedSchedules;
+};
+
 export {
   getCourses,
   getSelectedCourses,
@@ -293,4 +328,5 @@ export {
   getScheduleByDayAndSession,
   getRegularSchedule,
   getDailySchedule,
+  getWeeklySchedule,
 };
