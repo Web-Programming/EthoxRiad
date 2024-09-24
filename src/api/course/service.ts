@@ -167,6 +167,23 @@ const getCurrentSKS = (): number => {
   }, 0);
 };
 
+const getCoursesForDay = (
+  selectedCourses: SelectedCourseModel[],
+  dayIndex: number,
+) => {
+  return selectedCourses
+    .filter((course) =>
+      course.course.schedule.some((schedule) => schedule.day_id === dayIndex),
+    )
+    .map((course) => ({
+      ...course,
+      schedule: course.course.schedule.filter(
+        (schedule) => schedule.day_id === dayIndex,
+      ),
+    }))
+    .sort((a, b) => a.schedule[0].session_id - b.schedule[0].session_id);
+};
+
 export {
   getCourses,
   getSelectedCourses,
@@ -175,4 +192,5 @@ export {
   getCourseDataStatus,
   getCourseById,
   getCurrentSKS,
+  getCoursesForDay,
 };

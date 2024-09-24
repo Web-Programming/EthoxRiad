@@ -5,113 +5,76 @@ import {
   TableRow,
 } from "@components/Table";
 import {
-  getCurrentSKS,
+  getCoursesForDay,
   getSelectedCourses,
-  leaveCourse,
 } from "../../../api/course/service";
-import { dayName, sessionName, statusDetail, statusName } from "@utils/consts";
-import { cn } from "@utils/cn";
-import { useState } from "react";
+import { dayName, sessionName } from "@utils/consts";
 import { SelectedCourseModel } from "../../../api/course/model";
 
-type SelectedCourseListProps = {
-  setCurrentSKS: React.Dispatch<React.SetStateAction<number>>;
-};
-
-const SelectedCourseList = ({ setCurrentSKS }: SelectedCourseListProps) => {
-  const [selectedCourses, setSelectedCourses] =
-    useState<SelectedCourseModel[]>(getSelectedCourses());
-
-  const header = [
-    "no",
-    "kode mk",
+const SelectedCourseList = () => {
+  const selectedCourses: SelectedCourseModel[] = getSelectedCourses();
+  const parentHeader = ["no", "hari", "detail kelas"];
+  const courseDetailHeader = [
     "mata kuliah",
-    "sks",
+    "waktu kuliah",
     "kelas",
-    "jadwal",
-    "catatan dosen",
-    "status",
-    "aksi",
+    "jumlah sks",
   ];
-
-  const handleLeaveCourse = (courseId: number) => {
-    const isLeaved = leaveCourse(courseId);
-    if (isLeaved) {
-      setSelectedCourses(getSelectedCourses());
-      setCurrentSKS(getCurrentSKS());
-    }
-  };
 
   return (
     <div className="flex flex-col gap-5">
       <BaseTable>
-        <TableBody header={header}>
-          {selectedCourses.length !== 0 ? (
-            selectedCourses.map((row, index) => {
-              return (
-                <TableRow key={row.course.id}>
-                  <td className="px-4 border border-secondary">{index + 1}</td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.code ? row.course.code : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.name ? row.course.name : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.sks ? row.course.sks : "-"} sks
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.class ? row.course.class : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.course.schedule
-                      ? row.course.schedule.map((schedule) => {
-                          return (
-                            <div
-                              key={schedule.id}
-                              className="flex flex-col border-dashed border border-gray-300 pb-2 text-center my-2 rounded-lg"
+        <TableBody header={parentHeader}>
+          {Array.from({ length: 6 }, (_, index) => index + 1).length !== 0 ? (
+            Array.from({ length: 6 }, (_, index) => index + 1).map(
+              (dayIndex) => {
+                const coursesForDay = getCoursesForDay(
+                  selectedCourses,
+                  dayIndex,
+                );
+                return (
+                  <TableRow key={dayIndex}>
+                    <td className="px-4 border border-secondary">{dayIndex}</td>
+                    <td className="px-4 border border-secondary">
+                      {dayName[dayIndex]}
+                    </td>
+                    <td className="px-4 border border-secondary">
+                      {coursesForDay.length > 0 ? (
+                        coursesForDay.map((course) => (
+                          <BaseTable>
+                            <TableBody
+                              header={courseDetailHeader}
+                              isVertical
+                              isUsingColon={false}
                             >
-                              <div>{dayName[schedule.day_id] || "?"}</div>
-                              <div>
-                                {sessionName[schedule.session_id] ||
-                                  "00:00 - 00:00"}
-                              </div>
-                            </div>
-                          );
-                        })
-                      : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {row.lecturer_note ? row.lecturer_note : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    <div
-                      className={cn(
-                        statusDetail[row.status_id][1],
-                        "py-2 px-4 rounded-full text-white text-xs font-semibold",
+                              <TableRow key={course.course.id}>
+                                <div>{course.course.name}</div>
+                                <div>
+                                  {course.schedule
+                                    .map(
+                                      (schedule) =>
+                                        sessionName[schedule.session_id],
+                                    )
+                                    .join(", ")}
+                                </div>
+                                <div>{course.course.class}</div>
+                                <div>{course.course.sks} SKS</div>
+                              </TableRow>
+                            </TableBody>
+                          </BaseTable>
+                        ))
+                      ) : (
+                        <div className="text-sm text-gray-500">No courses</div>
                       )}
-                    >
-                      {statusDetail[row.status_id][0]}
-                    </div>
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {statusDetail[row.status_id][0] == statusName.APPROVED ||
-                      (statusDetail[row.status_id][0] == statusName.WAITING && (
-                        <div
-                          onClick={() => handleLeaveCourse(row.course.id)}
-                          className="py-2 px-4 rounded-md text-white text-xs font-semibold bg-red-500 hover:bg-red-700"
-                        >
-                          Keluar kelas
-                        </div>
-                      ))}
-                  </td>
-                </TableRow>
-              );
-            })
+                    </td>
+                  </TableRow>
+                );
+              },
+            )
           ) : (
             <TableEmptyRow
               text="Data tidak ditemukan"
-              colspan={header.length}
+              colspan={parentHeader.length}
             />
           )}
         </TableBody>

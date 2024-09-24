@@ -6,10 +6,17 @@ interface Props {
   className?: string;
   children: React.ReactNode | React.ReactNode[];
   isVertical?: boolean;
+  isUsingColon?: boolean;
 }
 
 function TableBody(props: Props) {
-  const { header, className, children, isVertical = false } = props;
+  const {
+    header,
+    className,
+    children,
+    isVertical = false,
+    isUsingColon = true,
+  } = props;
   const childrenArray = Array.isArray(children) ? children : [children];
 
   return (
@@ -20,11 +27,15 @@ function TableBody(props: Props) {
             <tbody className="text-left">
               {header.map((header, index) => (
                 <tr key={index}>
-                  <th className="uppercase text-xs p-4 border border-secondary">
+                  <th className="w-1/4 uppercase text-xs p-2 border border-secondary">
                     {header}
                   </th>
-                  <td className="text-center p-4 border border-secondary">:</td>
-                  <td className="p-4 border border-secondary">
+                  {isUsingColon && (
+                    <td className="w-1/12 text-center p-2 border border-secondary">
+                      :
+                    </td>
+                  )}
+                  <td className="w-3/4 p-2 border border-secondary">
                     {childrenArray.map((child, childIndex) => {
                       if (React.isValidElement(child)) {
                         return (

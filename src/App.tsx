@@ -22,7 +22,7 @@ export default function App() {
 
 function Layout() {
   return (
-    <div>
+    <div className="bg-gray-400">
       <header>{/* <Navbar /> */}</header>
       <main>
         <Outlet />
