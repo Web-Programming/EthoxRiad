@@ -19,3 +19,7 @@ export function dateFormatter(date: string) {
     return moment(date).format("MMM DD, YYYY [at] hh:mm:ss A");
   }
 }
+
+export function getDateToday() {
+  return moment().format("dddd, DD MMMM YYYY");
+}

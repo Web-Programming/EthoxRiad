@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 type SwitchSheduleTypeProps = {
-  type: ScheduleType;
+  type: ScheduleType | "";
   setType: (type: ScheduleType) => void;
 };
 

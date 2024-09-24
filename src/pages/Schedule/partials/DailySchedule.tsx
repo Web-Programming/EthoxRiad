@@ -4,48 +4,59 @@ import {
   TableRow,
   TableEmptyRow,
 } from "@components/Table";
-import { getRegularSchedule } from "../../../api/course/service";
+import {
+  getDailySchedule,
+  getScheduleByDayAndSession,
+} from "../../../api/course/service";
 import { sessionName } from "@utils/consts";
+import { getDateToday } from "@utils/formatter";
 
-const header = ["no", "hari", "jam", "mata kuliah", "sks", "ruang", "kelas"];
+const header = ["jam", getDateToday()];
 
 const DailySchedule = () => {
-  const regularSchedule = getRegularSchedule();
+  const dailySchedule = getDailySchedule();
 
   return (
     <div className="flex flex-col gap-5">
       <BaseTable>
         <TableBody header={header}>
-          {regularSchedule.length !== 0 ? (
-            regularSchedule.flatMap((daySchedule, dayIndex) =>
-              daySchedule.courses.map((course, courseIndex) => (
-                <TableRow key={`${dayIndex}-${courseIndex}`}>
-                  <td className="px-4 border border-secondary">
-                    {courseIndex + 1}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {daySchedule.dayName}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {sessionName[course.sessionId]}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {course.course.name}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {course.course.sks} sks
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {course.course.schedule[0].room
-                      ? course.course.schedule[0].room
-                      : "-"}
-                  </td>
-                  <td className="px-4 border border-secondary">
-                    {course.course.class ? course.course.class : "-"}
-                  </td>
-                </TableRow>
-              )),
-            )
+          {dailySchedule.sessions.length !== 0 ? (
+            dailySchedule.sessions.map((session, sessionIndex) => (
+              <TableRow key={sessionIndex}>
+                <td className="px-4 py-2 border border-secondary">
+                  {sessionName[session.sessionId]}
+                </td>
+                <td className="px-4 py-2 border border-secondary">
+                  {session.courses.length > 0 ? (
+                    session.courses.map((course, courseIndex) => {
+                      const exactSchedule = getScheduleByDayAndSession(
+                        course.course.schedule,
+                        dailySchedule.dayIndex,
+                        session.sessionId,
+                      );
+                      return (
+                        <div
+                          key={courseIndex}
+                          className="bg-gray-200 rounded-lg text-left p-4"
+                        >
+                          <div className="font-bold">{course.course.name}</div>
+                          <div>
+                            Ruang kelas:{" "}
+                            {exactSchedule && exactSchedule.room
+                              ? exactSchedule.room
+                              : "-"}
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="text-sm text-gray-500">
+                      Tidak ada jadwal
+                    </div>
+                  )}
+                </td>
+              </TableRow>
+            ))
           ) : (
             <TableEmptyRow
               text="Data tidak ditemukan"

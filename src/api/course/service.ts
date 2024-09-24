@@ -7,6 +7,7 @@ import {
 import studentData from "../student/data";
 import { dayName, sessionName } from "@utils/consts";
 import toast from "react-hot-toast";
+import { ScheduleModel } from "../schedule/model";
 
 const selectedCourseData: SelectedCourseLocalStorageModel[] = JSON.parse(
   localStorage.getItem("selectedCourseData") || "[]",
@@ -184,6 +185,17 @@ const getCoursesForDay = (
     .sort((a, b) => a.schedule[0].session_id - b.schedule[0].session_id);
 };
 
+const getScheduleByDayAndSession = (
+  schedule: ScheduleModel[],
+  dayId: number,
+  sessionId: number,
+) => {
+  return schedule.find(
+    (schedule) =>
+      schedule.day_id === dayId && schedule.session_id === sessionId,
+  );
+};
+
 const getRegularSchedule = () => {
   const selectedCourses = getSelectedCourses();
 
@@ -219,6 +231,56 @@ const getRegularSchedule = () => {
   return groupedSchedules;
 };
 
+const getDailySchedule = () => {
+  const selectedCourses = getSelectedCourses();
+
+  const today = new Date().getDay();
+
+  const flattenedSchedules = selectedCourses.flatMap((item) =>
+    item.course.schedule.map((schedule) => ({
+      ...item,
+      dayId: schedule.day_id,
+      sessionId: schedule.session_id,
+    })),
+  );
+
+  const schedulesForToday = flattenedSchedules.filter(
+    (schedule) => schedule.dayId === today,
+  );
+
+  const sortedSchedules = schedulesForToday.sort((a, b) => {
+    return a.sessionId - b.sessionId;
+  });
+
+  const sessionMap = new Map<number, SelectedCourseModel[]>();
+
+  for (let i = 1; i <= 6; i++) {
+    sessionMap.set(i, []);
+  }
+
+  sortedSchedules.forEach((schedule) => {
+    const sessionCourses = sessionMap.get(schedule.sessionId);
+    if (sessionCourses) {
+      sessionCourses.push(schedule);
+    }
+  });
+
+  const sessions = Array.from(sessionMap.entries()).map(
+    ([sessionId, courses]) => ({
+      sessionId,
+      courses,
+    }),
+  );
+
+  const groupedSchedules = {
+    dayIndex: today,
+    dayName: dayName[today],
+    sessions,
+  };
+
+  return groupedSchedules;
+};
+
 export {
   getCourses,
   getSelectedCourses,
@@ -228,5 +290,7 @@ export {
   getCourseById,
   getCurrentSKS,
   getCoursesForDay,
+  getScheduleByDayAndSession,
   getRegularSchedule,
+  getDailySchedule,
 };
