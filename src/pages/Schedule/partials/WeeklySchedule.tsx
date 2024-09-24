@@ -7,7 +7,7 @@ import {
 import { getSelectedCourses } from "../../../api/course/service";
 import { dayName, sessionName, statusDetail, statusName } from "@utils/consts";
 import { cn } from "@utils/cn";
-const TableBodyContent = () => {
+const WeeklySchedule = () => {
   const selectedCoursesData = getSelectedCourses();
   const header = [
     "no",
@@ -90,4 +90,4 @@ const TableBodyContent = () => {
   );
 };
 
-export default TableBodyContent;
+export default WeeklySchedule;

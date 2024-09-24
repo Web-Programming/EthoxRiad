@@ -17,7 +17,7 @@ const PrismaOnlineContent = () => {
 
   return (
     <div className="py-6 px-4">
-      <div className="text-2xl font-bold">Bukti Pengisian KRS</div>
+      <div className="text-2xl font-bold mb-4">Prisma Online</div>
 
       {/* SearchCourse */}
       <div className="bg-white rounded-lg py-1 px-5">

@@ -52,12 +52,12 @@ function TableBody(props: Props) {
             </tbody>
           ) : (
             <>
-              <thead className="text-center text-nowrap">
+              <thead className="text-center text-nowrap font-bold">
                 <tr>
                   {header.map((header, index) => (
                     <th
                       key={index}
-                      className="uppercase text-xs p-4 border border-secondary"
+                      className="uppercase p-4 border border-secondary"
                     >
                       {header}
                     </th>

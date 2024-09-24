@@ -21,7 +21,7 @@ const SearchCourse = ({ keyword, setKeyword }: SearchCourseProps) => {
   }, [keyword, navigate, location.search]);
 
   return (
-    <div className="p-4 bg-white shadow-md rounded-md">
+    <div className="p-4">
       <div className="text-lg font-semibold mb-2">Kode Mata Kuliah</div>
       <div>
         <input

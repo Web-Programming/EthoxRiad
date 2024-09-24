@@ -64,7 +64,9 @@ const SelectedCourseList = () => {
                           </BaseTable>
                         ))
                       ) : (
-                        <div className="text-sm text-gray-500">No courses</div>
+                        <div className="text-sm text-left text-gray-500">
+                          Tidak ada mata kuliah yang diambil pada hari ini
+                        </div>
                       )}
                     </td>
                   </TableRow>
