@@ -4,11 +4,7 @@ interface Props {
 function BaseTable(props: Props) {
   const { children } = props;
 
-  return (
-    <div className="w-full bg-secondary shadow-dropbox rounded-md">
-      {children}
-    </div>
-  );
+  return <div className="w-full shadow-dropbox rounded-md">{children}</div>;
 }
 
 export default BaseTable;

@@ -1,9 +1,12 @@
 import Navbar from "@components/Layout/Navbar";
 import "./index.css";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import MainSection from "@components/Layout/MainSection";
-import ContentWrapper from "@components/Layout/ContentWrapper";
 import DashboardPage from "@pages/Dashboard";
+import PrismaOnlinePage from "@pages/PrismaOnline";
+import ProofOfFillingPage from "@pages/ProofOfFilling";
+import SchedulePage from "@pages/Schedule";
 
 export default function App() {
   return (
@@ -11,10 +14,9 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<DashboardPage />} />
-          <Route
-            path="/jadwal-perkuliahan"
-            element={DummyContent("Jadwal Perkuliahan")}
-          />
+          <Route path="/prisma-online" element={<PrismaOnlinePage />} />
+          <Route path="/proof-of-filling" element={<ProofOfFillingPage />} />
+          <Route path="/schedule" element={<SchedulePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
@@ -32,33 +34,7 @@ function Layout() {
           <Outlet />
         </MainSection>
       </main>
+      <Toaster />
     </div>
-  );
-}
-
-function DummyContent(title: string) {
-  return (
-    <ContentWrapper title={title}>
-      <div className="bg-white p-4 px-8 w-full">
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-        <h1>Dashboard</h1>
-      </div>
-    </ContentWrapper>
   );
 }

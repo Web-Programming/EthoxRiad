@@ -5,6 +5,8 @@ import { useSidebar } from "@store/sidebar";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import useWindowSize from "@hooks/useWindowSize";
+import { TbAirBalloon } from "react-icons/tb";
+import { PiNotebookBold } from "react-icons/pi";
 
 const Sidebar = () => {
   const currentMenu = useSidebar();
@@ -19,8 +21,18 @@ const Sidebar = () => {
       icon: <RxDashboard className={iconClass} />,
     },
     {
+      title: "Prisma Online",
+      route: "/prisma-online",
+      icon: <TbAirBalloon className={iconClass} />,
+    },
+    {
+      title: "Riwayat Pengisian",
+      route: "/proof-of-filling",
+      icon: <PiNotebookBold className={iconClass} />,
+    },
+    {
       title: "Perkuliahan",
-      route: "/jadwal-perkuliahan",
+      route: "/schedule",
       icon: <GrSchedules className={iconClass} />,
     },
   ];
@@ -33,7 +45,10 @@ const Sidebar = () => {
   return (
     <div className="bg-secondary rounded-s-3xl md:w-56 w-24 flex flex-col items-center py-12 gap-1">
       {sidebarItems.map((item, index) => (
-        <div key={index} className="w-full md:h-12 h-9 md:px-4 px-5">
+        <div
+          key={index}
+          className="w-full md:h-12 h-9 md:px-4 px-5 text-nowrap"
+        >
           <Tooltip
             hasArrow
             label={!md && item.title}
@@ -42,7 +57,7 @@ const Sidebar = () => {
           >
             <button
               className={clsx(
-                "w-full h-full flex items-center md:justify-start justify-center rounded-lg",
+                "w-full h-full flex items-center md:justify-start justify-center rounded-lg md:pe-4",
                 currentMenu.menu === index
                   ? "bg-blue-500/40"
                   : "hover:bg-blue-500/20",
