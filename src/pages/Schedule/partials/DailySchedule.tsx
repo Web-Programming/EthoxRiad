@@ -17,6 +17,7 @@ const header = ["jam", getDateToday()];
 
 const DailySchedule = () => {
   const dailySchedule = getDailySchedule();
+  const commonTdClass = "px-4 border border-gray-200";
 
   return (
     <div className="flex flex-col gap-5 bg-white">
@@ -34,14 +35,14 @@ const DailySchedule = () => {
                   key={sessionId}
                   className={cn({ "bg-blue-400 text-white": isActive })}
                 >
-                  <td className="p-2 border border-gray-200">
+                  <td className={commonTdClass}>
                     {
                       sessionName[
                         sessionId as unknown as keyof typeof sessionName
                       ]
                     }
                   </td>
-                  <td className="p-2 border border-gray-200">
+                  <td className={commonTdClass}>
                     {coursesForSession.length > 0 ? (
                       coursesForSession.map((course, courseIndex) => {
                         const exactSchedule = getScheduleByDayAndSession(
@@ -53,7 +54,12 @@ const DailySchedule = () => {
                         return (
                           <div
                             key={courseIndex}
-                            className="bg-gray-200 rounded-lg text-left p-4"
+                            className={cn(
+                              "rounded-lg text-left p-4 my-4",
+                              isActive
+                                ? "bg-blue-200 text-black"
+                                : "bg-gray-200",
+                            )}
                           >
                             <div className="font-bold">
                               {course.course.name}
@@ -65,7 +71,6 @@ const DailySchedule = () => {
                                 : "-"}
                             </div>
                             <div>
-                              Gedung:{" "}
                               {exactSchedule &&
                                 getBuildingName(exactSchedule.room)}
                             </div>

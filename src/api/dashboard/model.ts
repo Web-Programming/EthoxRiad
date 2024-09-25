@@ -1,4 +1,4 @@
-export type News = {
+export type NewsModel = {
   id: number;
   title: string;
   desc: string;

@@ -1,8 +1,8 @@
-import { News } from "./entity";
+import { NewsModel } from "./model";
 
 export default class DashboardServices {
-  getNews(): News[] {
-    const data: News[] = [
+  getNews(): NewsModel[] {
+    const data: NewsModel[] = [
       {
         id: 1,
         title: "Kantin telah dibuka",

@@ -22,6 +22,7 @@ const header = [
 
 const WeeklySchedule = () => {
   const weeklySchedule = getWeeklySchedule();
+  const commonTdClass = "p-2 border border-gray-200";
 
   return (
     <div className="flex flex-col gap-5">
@@ -30,7 +31,7 @@ const WeeklySchedule = () => {
           {weeklySchedule.length !== 0 ? (
             Object.keys(sessionName).map((sessionId) => (
               <TableRow key={sessionId}>
-                <td className="p-2 border border-gray-200">
+                <td className={commonTdClass}>
                   {
                     sessionName[
                       sessionId as unknown as keyof typeof sessionName
@@ -54,7 +55,7 @@ const WeeklySchedule = () => {
                     );
 
                   return (
-                    <td key={dayId} className="p-2 border border-gray-200">
+                    <td key={dayId} className={commonTdClass}>
                       {coursesForDayAndSession.length > 0 &&
                         coursesForDayAndSession.map((course, courseIndex) => {
                           const exactSchedule = getScheduleByDayAndSession(
@@ -71,6 +72,7 @@ const WeeklySchedule = () => {
                               <div className="font-bold">
                                 {course.course.name}
                               </div>
+                              <hr className="my-2 border border-white" />
                               <div>
                                 {exactSchedule && exactSchedule.room
                                   ? exactSchedule.room

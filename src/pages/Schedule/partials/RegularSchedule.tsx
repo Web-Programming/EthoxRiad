@@ -16,6 +16,7 @@ const header = ["no", "hari", "jam", "mata kuliah", "sks", "ruang", "kelas"];
 const RegularSchedule = () => {
   const regularSchedule = getRegularSchedule();
   let rowIndex = 1;
+  const commonTdClass = "px-4 border border-gray-200";
 
   return (
     <div className="flex flex-col gap-5">
@@ -29,36 +30,33 @@ const RegularSchedule = () => {
                   daySchedule.dayIndex,
                   course.sessionId,
                 );
+                const tdDataMap: (string | number)[] = [
+                  rowIndex++,
+                  daySchedule.dayName || "-",
+                  sessionName[course.sessionId] || "-",
+                  course.course.name || "-",
+                  course.course.sks || "-",
+                  "-",
+                  course.course.class || "-",
+                ];
                 return (
                   <TableRow key={`${dayIndex}-${courseIndex}`}>
-                    <td className="px-4 py-2 border border-gray-200">
-                      {rowIndex++}
-                    </td>
-                    <td className="px-4 py-2 border border-gray-200">
-                      {daySchedule.dayName}
-                    </td>
-                    <td className="px-4 py-2 border border-gray-200">
-                      {sessionName[course.sessionId]}
-                    </td>
-                    <td className="px-4 py-2 border border-gray-200">
-                      {course.course.name}
-                    </td>
-                    <td className="px-4 py-2 border border-gray-200">
-                      {course.course.sks}
-                    </td>
-                    <td className="px-4 py-2 border border-gray-200">
-                      {exactSchedule && exactSchedule.room ? (
-                        <div>
-                          <div>{exactSchedule.room}</div>
-                          <div>{getBuildingName(exactSchedule.room)}</div>
-                        </div>
-                      ) : (
-                        "-"
-                      )}
-                    </td>
-                    <td className="px-4 py-2 border border-gray-200">
-                      {course.course.class ? course.course.class : "-"}
-                    </td>
+                    {tdDataMap.map((value, key) => (
+                      <td key={key} className={commonTdClass}>
+                        {key === 5 ? (
+                          exactSchedule ? (
+                            <div className="p-2">
+                              <div>{exactSchedule.room}</div>
+                              <div>{getBuildingName(exactSchedule.room)}</div>
+                            </div>
+                          ) : (
+                            "-"
+                          )
+                        ) : (
+                          value
+                        )}
+                      </td>
+                    ))}
                   </TableRow>
                 );
               }),

@@ -1,8 +1,8 @@
-import { News } from "@services/dashboard/entity";
-import DashboardServices from "@services/dashboard/service";
+import { NewsModel } from "@models/dashboard";
+import DashboardServices from "../../api/dashboard/service";
 
 interface HookReturn {
-  data: News[];
+  data: NewsModel[];
 }
 const useNews = (): HookReturn => {
   const dashboardService = new DashboardServices();
