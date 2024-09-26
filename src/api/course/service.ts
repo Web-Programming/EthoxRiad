@@ -5,13 +5,15 @@ import {
   SelectedCourseModel,
 } from "./model";
 import studentData from "../student/data";
-import { dayName, sessionName } from "@utils/consts";
+import {
+  dayName,
+  sessionName,
+  statusDetailName,
+  statusNameMap,
+} from "@utils/consts";
 import toast from "react-hot-toast";
-import { ScheduleModel } from "../schedule/model";
-
-const selectedCourseData: SelectedCourseLocalStorageModel[] = JSON.parse(
-  localStorage.getItem("selectedCourseData") || "[]",
-);
+import { selectedCourseData } from "@utils/selectedCourseData";
+import { ScheduleModel } from "@models/schedule";
 
 const getCourses = (keyword: string): CourseModel[] => {
   if (!keyword || keyword === "" || keyword.length < 3) {
@@ -144,14 +146,16 @@ const leaveCourse = (courseId: number): boolean => {
   return true;
 };
 
-const getCourseDataStatus = (courseId: number): number => {
+const getCourseDataStatusName = (courseId: number): string | 4 => {
   const courseData = selectedCourseData.find(
     (data: SelectedCourseLocalStorageModel) => {
       return data.course_id === courseId;
     },
   );
 
-  return courseData ? courseData.status_id : 4; // Assuming 4 is the default status_id
+  return courseData
+    ? statusDetailName[courseData.status_id]
+    : statusNameMap.NOT_TAKEN;
 };
 
 const getCourseById = (id: number): CourseModel => {
@@ -236,6 +240,8 @@ const getDailySchedule = () => {
 
   const today = new Date().getDay();
 
+  const adjustedToday = today === 0 ? 7 : today;
+
   const flattenedSchedules = selectedCourses.flatMap((item) =>
     item.course.schedule.map((schedule) => ({
       ...item,
@@ -245,7 +251,7 @@ const getDailySchedule = () => {
   );
 
   const schedulesForToday = flattenedSchedules.filter(
-    (schedule) => schedule.dayId === today,
+    (schedule) => schedule.dayId === adjustedToday,
   );
 
   const sortedSchedules = schedulesForToday.sort((a, b) => {
@@ -254,7 +260,7 @@ const getDailySchedule = () => {
 
   const sessionMap = new Map<number, SelectedCourseModel[]>();
 
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 7; i++) {
     sessionMap.set(i, []);
   }
 
@@ -273,8 +279,8 @@ const getDailySchedule = () => {
   );
 
   const groupedSchedules = {
-    dayIndex: today,
-    dayName: dayName[today],
+    dayIndex: adjustedToday,
+    dayName: dayName[adjustedToday],
     sessions,
   };
 
@@ -321,7 +327,7 @@ export {
   getSelectedCourses,
   joinCourse,
   leaveCourse,
-  getCourseDataStatus,
+  getCourseDataStatusName,
   getCourseById,
   getCurrentSKS,
   getCoursesForDay,

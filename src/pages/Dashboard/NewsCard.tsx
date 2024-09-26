@@ -1,9 +1,9 @@
-import { News } from "@services/dashboard/entity";
+import { NewsModel } from "@models/dashboard";
 import moment from "moment";
 import { BiCalendar } from "react-icons/bi";
 
 interface Props {
-  news: News;
+  news: NewsModel;
 }
 const NewsCard = (props: Props) => {
   const { news } = props;

@@ -14,24 +14,22 @@ const StudentInfo = ({ currentSKS }: StudentInfoProps) => {
   const studentData = getStudent();
   const header = ["npm", "nama", "jurusan", "waktu kuliah", "total sks"];
 
+  const divMap: (string | number)[] = [
+    studentData.id || "-",
+    studentData.name || "-",
+    studentData.major || "-",
+    studentData.shift || "-",
+    `${currentSKS} / ${studentData.max_sks}` || "-",
+  ];
   return (
     <div className="flex flex-col gap-5">
       <BaseTable>
         <TableBody header={header} isVertical>
           {studentData ? (
             <TableRow key={studentData.id}>
-              <div>{studentData.id}</div>
-
-              <div>{studentData.name ? studentData.name : "-"}</div>
-
-              <div>{studentData.major ? studentData.major : "-"}</div>
-
-              <div>{studentData.shift ? studentData.shift : "-"}</div>
-
-              <div>
-                {currentSKS ? currentSKS : 0} /{" "}
-                {studentData.max_sks ? studentData.max_sks : "-"}
-              </div>
+              {divMap.map((value, key) => (
+                <div key={key}>{value}</div>
+              ))}
             </TableRow>
           ) : (
             <TableEmptyRow
